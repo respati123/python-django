@@ -1,0 +1,42 @@
+{% extends "music/base.html" %}
+
+{% block title %} Music - Songs {% endblock %}
+
+{% block body %}
+{{ all_album.album_logo }}
+
+<h1>{{ all_albums.album_title }}</h1>
+<br>
+<p>artist : {{ all_albums.artist }}, genre: {{ all_albums.genre }}, {{ all_albums.date }}</p>
+
+
+<ul>
+    {% for song in all_albums.song_set.all %}
+        <li>{{ song.song_title }}</li>
+        <ul>
+            <li>{{ song.file_type }}</li>
+        </ul>
+    {% endfor %}
+</ul>
+
+
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'music:favorite' all_albums.id %}" method="post">
+    {% csrf_token %}
+    {% for song in all_albums.song_set.all %}
+        <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.id }}">
+        <label for="song{{ forloop.counter }}">
+            {{ song.song_title }}
+            {% if song.favorite %}
+                <b>isFavorite</b>
+            {% endif %}
+
+        </label><br>
+    {% endfor %}
+    <input type="submit" value="favorite">
+</form>
+
+{% endblock %}

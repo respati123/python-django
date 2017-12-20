@@ -1,0 +1,25 @@
+{% extends 'music/base.html' %}
+
+
+{% block title %} Form Add Album {% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            Form Input {% block title-form %} {% endblock %}
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'music/parsing/form-template.html' %}
+                    <div class="col-sm-10 offset-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
